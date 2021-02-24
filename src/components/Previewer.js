@@ -1,20 +1,18 @@
-import React from 'react';
-import { CardHeader, Card } from '@material-ui/core';
-import { Avatar } from '@material-ui/core';
-import { IconButton } from '@material-ui/core';
+import { CardHeader, Card, Avatar, IconButton, Typography } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import OpenWithIcon from '@material-ui/icons/OpenWith';
-import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
 import marked from 'marked';
 import parse from 'html-react-parser';
 
 const useStyles = makeStyles({
-  prevSytles: {
+  previewer: {
     display: 'flex',
     flexDirection: 'column',
     boxShadow: '5px 5px 5px', 
     width: '100%',
+    marginTop: '10px',
     flex: '1',
     marginBottom: '10px',
     backgroundColor: '#f9f9f9',
@@ -32,7 +30,7 @@ const useStyles = makeStyles({
   content: {
     overflowY: 'scroll',
   }
-});
+})
 
 marked.setOptions({
   gfm: true,
@@ -43,15 +41,18 @@ export default function Previewer(props) {
   const classes = useStyles();
   
   return (
-    <Card variant='outlined' className={classes.prevSytles}>
+    <Card variant='outlined' className={classes.previewer}>
       <CardHeader 
         className={classes.header} 
         avatar={
           <Avatar className={classes.prevAvatar}>P</Avatar>
         }
         action={
-          <IconButton>
-            <OpenWithIcon className={classes.icon}/>
+          <IconButton onClick={props.toggleShow}>
+            {props.show 
+              ? <OpenWithIcon className={classes.icon}/> 
+              : <CloseIcon />
+            }
           </IconButton>
         }
         title="PREVIEWER"

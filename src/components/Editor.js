@@ -1,17 +1,22 @@
-import React from 'react';
-import { TextareaAutosize } from '@material-ui/core';
-import { CardHeader, Card } from '@material-ui/core';
-import { Avatar } from '@material-ui/core';
-import { IconButton } from '@material-ui/core';
+import React, { useState } from 'react';
+import { TextareaAutosize, CardHeader, Card, Avatar, IconButton } from '@material-ui/core';
 import OpenWithIcon from '@material-ui/icons/OpenWith';
+import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-  editorSytles: {
+  editorNormal: {
     marginTop: '10px',
     marginBottom: '10px',
     boxShadow: '5px 5px 5px',
     width: '80%',
+  },
+  editorExpanded: {
+    marginTop: '10px',
+    marginBottom: '10px',
+    boxShadow: '5px 5px 5px',
+    width: '100%',
+    height: '100vh',
   },
   editorAvatar: {
     color: 'black'
@@ -19,10 +24,18 @@ const useStyles = makeStyles({
   header: {
     backgroundColor: '#87ceeb',
   },
-  textArea: {
+  close: {
+    width: '100%',
+    overflow: 'scroll !important',
+    backgroundColor: '#f9f9f9',
+    resize: 'vertical',
+    minHeight: '150px'
+  },
+  open: {
     width: '100%',
     overflow: 'scroll',
     backgroundColor: '#f9f9f9',
+    height: '100% !important',
     resize: 'vertical',
   },
   icon: {
@@ -32,30 +45,39 @@ const useStyles = makeStyles({
 
 export default function Editor(props) {
   const classes = useStyles();
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleExpanded = () => {
+    const currentState = expanded;
+    setExpanded(!currentState);
+  }
 
   return (
-      <Card variant='outlined' className={classes.editorSytles}>
+      <Card variant='outlined' className={ expanded ? classes.editorExpanded : classes.editorNormal}>
         <CardHeader
           className={classes.header} 
           avatar={
             <Avatar className={classes.editorAvatar}>E</Avatar>
           }
           action={
-            <IconButton>
-              <OpenWithIcon className={classes.icon}/>
+            <IconButton onClick={toggleExpanded}>
+              {expanded 
+                ? <CloseIcon/>
+                : <OpenWithIcon className={classes.icon}/> 
+              }
             </IconButton>
           }
           title="EDITOR"
         />
         <TextareaAutosize 
           id="editor" 
-          className={classes.textArea}
+          className={ expanded ? classes.open : classes.close}
           placeholder="Markdown Editor..." 
           onChange={(e) => props.updateText(e.target.value)}
           rowsMax={12}
           value={props.text}
-          >
-          </TextareaAutosize>
+        >
+        </TextareaAutosize>
      </Card>
   )
 }

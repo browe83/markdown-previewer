@@ -19,16 +19,18 @@ const initialText = '# h1\r## h2\n[GitHub](http://github.com)\n\n`const name = "
 
 function App() {
   const [text, setText] = useState(initialText);
+  const [show, setShow] = useState(true);
   const classes = useStyles();
 
-  const updateText = (text) => {
-    setText(text);
+  const toggleShow = () => {
+    const currentState = show;
+    setShow(!currentState);
   }
 
   return (
     <Container className={classes.container}>
-        <Editor text={text} updateText={updateText}/>
-        <Previewer text={text}/>
+        { show && <Editor text={text} updateText={setText}/>}
+        <Previewer text={text} show={show} toggleShow={toggleShow}/>
     </Container>
   );
 }
