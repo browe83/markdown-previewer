@@ -29,7 +29,7 @@ function App() {
 
   return (
     <Container className={classes.container}>
-        { show && <Editor text={text} updateText={setText}/>}
+        {show && <Editor text={text} updateText={setText}/>}
         <Previewer text={text} show={show} toggleShow={toggleShow}/>
     </Container>
   );

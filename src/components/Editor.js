@@ -17,6 +17,8 @@ const useStyles = makeStyles({
     boxShadow: '5px 5px 5px',
     width: '100%',
     height: '100vh',
+    display:'flex',
+    flexDirection: 'column',
   },
   editorAvatar: {
     color: 'black'
@@ -29,11 +31,9 @@ const useStyles = makeStyles({
     overflow: 'scroll !important',
     backgroundColor: '#f9f9f9',
     resize: 'vertical',
-    minHeight: '150px'
   },
   open: {
     width: '100%',
-    overflow: 'scroll',
     backgroundColor: '#f9f9f9',
     height: '100% !important',
     resize: 'vertical',
@@ -74,6 +74,7 @@ export default function Editor(props) {
           className={ expanded ? classes.open : classes.close}
           placeholder="Markdown Editor..." 
           onChange={(e) => props.updateText(e.target.value)}
+          rowsMin={12}
           rowsMax={12}
           value={props.text}
         >
